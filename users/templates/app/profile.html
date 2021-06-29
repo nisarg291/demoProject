@@ -1,0 +1,55 @@
+{% extends "app/base.html" %}
+{% block content %}
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+<main class="container mt-5 my-5 main">
+  <div class="absolute-center text-center content-section">
+      <div class="col-md-6 mt-5 col-sm-10 center">
+        <div class="card-body">
+            <!-- <img class="square-circle account-img" id="image" src="{{ user.profile.image.url }}"> -->
+            <input type="hidden" value="{{user.id}}" id="userid">
+            <!-- <input type="hidden" value="{{Friends}}" id="userFriends"> -->
+            <!-- <a href="../followers" class="mr-3">followers(<span id="follow">0</span>)</a><a class="ml-3" href="../following">following(<span id="following">0</span>)</a> -->
+            <h3 class="text-center text-uppercase">Your Profile</h3>
+            <div class="form-group">
+              <label for="exampleInputEmail1" style="margin-left:0px">UserName :</label>
+              <input type="text" class="form-control rounded-pill" id="exampleInputEmail1" aria-describedby="emailHelp" value={{user.username}} placeholder="Enter email" readonly>
+            </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">FirstName :</label>
+                <input type="text" class="form-control rounded-pill" id="exampleInputEmail1" aria-describedby="emailHelp" value={{user.profile.UserFirstName}} placeholder="Enter email" readonly>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">LastName :</label>
+                <input type="text" class="form-control rounded-pill" id="exampleInputEmail1" aria-describedby="emailHelp" value={{user.profile.UserLastName}} placeholder="Enter email" readonly>
+              </div>
+              
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email :</label>
+                <input type="text" class="form-control rounded-pill" id="exampleInputEmail1" aria-describedby="emailHelp" value={{user.profile.UserEmail}} placeholder="Enter email" readonly>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Gender :</label>
+                <input type="text" class="form-control rounded-pill" id="exampleInputEmail1" aria-describedby="emailHelp" value={{user.profile.Gender}} placeholder="Enter email" readonly>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Hobbies :</label>
+                <input type="text" class="form-control rounded-pill" id="exampleInputEmail1" aria-describedby="emailHelp" value={{user.profile.Hobbies}} readonly>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Ressidence :</label>
+                <input type="text" class="form-control rounded-pill" id="exampleInputEmail1" aria-describedby="emailHelp" value={{user.profile.Ressidence}} placeholder="Enter email" readonly>
+              </div>
+           </div>
+      </div>
+    </div>
+    </main>
+    </div>
+    </div>
+{% endblock content %}
+{%block js%}
+
+{% endblock %}

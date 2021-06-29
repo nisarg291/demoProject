@@ -1,0 +1,155 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% block design %}
+.msg{
+  color:red !important;
+}
+{% endblock design %}
+
+{% block content %}
+<div class="page-wrapper" style="box-shadow:none !important">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="col-md-12 col-sm-10">
+            <div class="form-group">
+                <h2 style="color: black !important;">New Master Incedent</h2>
+                <h3 style="color: black !important;">Initial Reporting</h3>
+            </div>
+            <div class="">
+              <div class="form-group">
+                {% if messages %}
+                {% for message in messages %}
+                  <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert"> -->
+                    <p class="msg" style="color:green !important">{{message}}</p>
+                    <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"> -->
+                      <!-- <span aria-hidden="true">&times;</span> -->
+                    <!-- </button> -->
+                  <!-- </div> -->
+                {% endfor %}
+                {% endif %}
+              </div>
+
+                <form method="post" action="" onsubmit="return fun2()">{% csrf_token %}  
+                    <div class="form-group row">
+                        <label for="Location" class="col-md-2 col-sm-12 col-form-label">Location</label>
+                        <select id="Location" name="Location" class="form-control col-md-3 col-sm-12">
+                          <option value="Corporate Headoffice" selected>Corporate Headoffice</option>
+                          <option value="Operations Department">Operations Department</option>
+                          <option value="Work Station">Work Station</option>
+                          <option value="Marketing Division">Marketing Division</option>
+                        </select>
+                      </div>
+                    <div class="form-group row">
+                        <label for="IncidentDescription" class="col-md-2 col-form-label">Incident Description</label>
+                        <div class="col-md-4 col-sm-10">
+                          <textarea class="form-control" id="IncidentDescription" name="IncidentDescription" placeholder="Incident Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="DateTimeOfIncident" class="col-md-2 col-form-label">Date and Time of Incident</label>
+                      <div class="col-md-2 col-sm-10">
+                        <input type="date" class="form-control" id="DateOfIncident" name="DateOfIncident" placeholder="Date and Time Of Incident">
+                      </div>
+                      <div class="col-md-2 col-sm-10">
+                        <input type="time" class="form-control" id="TimeOfIncident" name="TimeOfIncident" placeholder="Date and Time Of Incident">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="IncidentLocation" class="col-md-2 col-form-label">Incident Location</label>
+                        <div class="col-md-4 col-sm-10">
+                          <textarea class="form-control" id="IncidentLocation" name="IncidentLocation" placeholder="Incident Location"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="InitialSeverity" class="col-md-2 col-sm-12 col-form-label">Initial Severity</label>
+                        <select id="InitialSeverity"name="InitialSeverity" class="form-control col-md-2 col-sm-12">
+                          <option value="Mild" selected>Mild</option>
+                          <option value="Moderate">Moderate</option>
+                          <option value="Severe">Severe</option>
+                          <option value="Fatal">Fatal</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for="SuspectedCause" class="col-md-2 col-form-label">Suspected Cause</label>
+                        <div class="col-md-4 col-sm-10">
+                          <textarea class="form-control" id="SuspectedCause" name="SuspectedCause" placeholder="Suspected Cause"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ImmediateActionsTaken" class="col-md-2 col-form-label">Immediate Actions Taken</label>
+                        <div class="col-md-4 col-sm-10">
+                          <textarea class="form-control" id="ImmediateActionsTaken" name="ImmediateActionsTaken" placeholder="Immediate Actions Taken"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3 col-sm-6">Sub Incident Types</div>
+                        <div class="col-md-4 col-sm-5">
+                          <div class="form-check">
+                            <input class="form-check-input chkvalues" id="chk1" type="checkbox" onclick="fun1(this)" name="SubIncidentTypes[]" value="EnvironmentalIncident" id="SubIncidentTypes">
+                            <label class="form-check-label" for="SubIncidentTypes">
+                               Environmental Incident
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input chkvalues" id="chk2" type="checkbox" onclick="fun1(this)" name="SubIncidentTypes[]" value="Injury/illness" id="SubIncidentTypes">
+                            <label class="form-check-label" for="SubIncidentTypes">
+                              Injury/illness
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input chkvalues" id="chk3" type="checkbox" onclick="fun1(this)" name="SubIncidentTypes[]" value="PropertyDamage" id="SubIncidentTypes">
+                            <label class="form-check-label" for="SubIncidentTypes">
+                              Property Damage
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input chkvalues" type="checkbox"  id="chk4" onclick="fun1(this)" name="SubIncidentTypes[]" value="Vehicle"  id="SubIncidentTypes">
+                            <label class="form-check-label" for="SubIncidentTypes">
+                              Vehicle
+                            </label>
+                          </div>
+                          <div style="display:none"><input type="text" id="txtvalues" name="SubIncidentTypes"></div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="ReportedBy" class="col-md-2 col-form-label">Reported By</label>
+                        <!-- <div class="col-md-4">{{user.username}}</div> -->
+                        <input type="text" class="form-control col-md-4" id="ReportedBy" style="border:0px;background-color:#f9fbfd !important;color:#7c8798 !important" name="ReportedBy" value={{user.username}} placeholder="" readonly>
+                    </div>
+                    <div class="form-group col-md-4 float-right">
+                        <input  class="btn btn-primary mt-3" type="submit" class="" value="save">
+                        <button class="btn btn-primary mt-3" type="button">Save for later</button>
+                        <button class="btn btn-primary mt-3" type="reset">Cancel</button>
+                    </div>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js%}
+var s1="";
+var s2=document.getElementById('txtvalues');
+s2.value="";
+let count=0;
+function fun1(s){
+  console.log(s.value)
+    document.getElementById('txtvalues').value=document.getElementById('txtvalues').value+s.value+",";
+    count=count+1;
+}
+function fun2(){
+    console.log(count);
+
+    if(count<=4){
+      txtvalues.value+=", , , ,"
+
+    }
+    return true;
+}
+
+
+
+{%endblock js %}}

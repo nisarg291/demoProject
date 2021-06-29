@@ -1,0 +1,54 @@
+{% extends "app/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<main class="container">
+    <div class="absolute-center text-center content-section  main">
+        <div class="card col-md-4 col-sm-10 center bg-cyan">
+        <form action="" method="post">
+            {% csrf_token %}
+            <!-- <fieldset class="form-group"> -->
+                <h3 class="text-center text-uppercase mb-4 gradient-text">Join Today</h3>
+                <div class="form-group">
+                  {% if messages %}
+                  {% for message in messages %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <strong>{{user.username}}</strong> {{message}}
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                  {% endfor %}
+                  <!-- <div class="center mb-5">
+                      <a class="btn btn-success" href="{%url 'home' %}">Home</a>
+                    </div> -->
+                {% endif %}
+              </div>
+                {% for field in form %}
+                <div class="form-group">
+                  <h6 class=""><b>{{ field.label_tag }}</b></h6>
+                  <div class="col-md-12 ">{{field}}</div>
+                  {% if field.help_text %}
+                  <small id="emailHelp" style="" class="form-text">{{field.help_text}}</small>
+                  {% endif %}
+                  {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </div>
+                {% endfor %}
+            <!-- </fieldset> -->
+            <div class="form-group">
+                <button class="col-sm-6 btn btn-secondary rounded-pill mt-3" type="submit">Sign Up</button>
+            </div>
+            
+        </form>
+        <div class="pt-3">
+            <small class="text">
+                Already Have An Account? <a class="col-sm-4 rounded-pill btn btn-primary ml-2" href="{% url 'login' %}">Sign In</a>
+            </small>
+        </div>
+    </div>
+    </div>
+</main>
+    
+{% endblock content %}

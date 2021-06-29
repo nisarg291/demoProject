@@ -1,0 +1,197 @@
+{% extends 'app/base.html' %}
+{% load crispy_forms_tags %}
+{% block design %}
+.msg{
+  color:red !important;
+}
+{% endblock design %}
+
+{% block content %}
+<div class="page-wrapper" style="box-shadow:none !important">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="col-md-12 col-sm-10">
+            <div class="form-group">
+                <h2 style="color: black !important;">New Master Incedent</h2>
+                <h3 style="color: black !important;">Initial Reporting</h3>
+            </div>
+            <div class="">
+              <div class="form-group">
+                {% if messages %}
+                {% for message in messages %}
+                  <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert"> -->
+                    <p class="msg" style="color:green !important">{{message}}</p>
+                    <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"> -->
+                      <!-- <span aria-hidden="true">&times;</span> -->
+                    <!-- </button> -->
+                  <!-- </div> -->
+                {% endfor %}
+                {% endif %}
+              </div>
+
+                 
+                <div class="form-group">
+                <form method="post" action="">{% csrf_token %} 
+                    {% for incident in incidents %}
+                    <div class="form-group text-center mt-2 mb-2 row">
+                        <input type="hidden" value={{forloop.counter}} class="counter">
+                        <h1>ReportedBy :- {{user.username}}   incident-id :-  {{incident.id}}    no :- {{forloop.counter}}</h1>
+                    </div> 
+                    <div class="form-group row">
+                        <label for="Location" class="col-md-2 col-sm-12 col-form-label">Location</label>
+                        <input type="hidden" value={{incident.location}} class="loc">
+                        <select id="Location" name="Location" class="form-control col-md-3 col-sm-12">
+                          <option value="CH" class="ch">Corporate Headoffice</option>
+                          <option value="OD" class="od">Operations Department</option>
+                          <option value="WS" class="ws">Work Station</option>
+                          <option value="MD" class="md">Marketing Division</option>
+                        </select>
+                      </div>
+
+                    <div class="form-group row">
+                        <label for="IncidentDescription" class="col-md-2 col-form-label">Incident Description</label>
+                        <div class="col-md-4 col-sm-10">
+                          <textarea class="form-control" id="IncidentDescription" name="IncidentDescription" placeholder="Incident Description">{{incident.description}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="DateTimeOfIncident" class="col-md-2 col-form-label">Date and Time of Incident</label>
+                      <div class="col-md-2 col-sm-10">
+                          <input type="hidden" class="incd_date" value={{incident.year}}>
+                        <input type="text" class="form-control" id="DateOfIncident{{forloop.counter}}" value={{incident.day}}-{{incident.month}}-{{incident.year}} name="DateOfIncident" placeholder="Date and Time Of Incident">
+                      </div>
+                      <div class="col-md-2 col-sm-10">
+                        <input type="text" class="form-control" id="TimeOfIncident{{forloop.counter}}" value={{incident.incident_time}} name="TimeOfIncident" placeholder="Date and Time Of Incident">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="IncidentLocation" class="col-md-2 col-form-label">Incident Location</label>
+                        <div class="col-md-4 col-sm-10">
+                          <textarea class="form-control" id="IncidentLocation" name="IncidentLocation" placeholder="Incident Location">{{incident.incident_location}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="InitialSeverity" class="col-md-2 col-sm-12 col-form-label">Initial Severity</label>
+                        <input type="hidden" value={{incident.severity}} class="severity">
+                        <select id="InitialSeverity"name="InitialSeverity" class="form-control col-md-2 col-sm-12">
+                          <option value="Mild" class='Mild'>Mild</option>
+                          <option value="Moderate" class="Moderate">Moderate</option>
+                          <option value="Severe" class="Severe">Severe</option>
+                          <option value="Fatal" class="Fatal">Fatal</option>
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for="SuspectedCause" class="col-md-2 col-form-label">Suspected Cause</label>
+                        <div class="col-md-4 col-sm-10">
+                          <textarea class="form-control" id="SuspectedCause{{forloop.counter}}" name="SuspectedCause" placeholder="Suspected Cause">{{incident.cause}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ImmediateActionsTaken" class="col-md-2 col-form-label">Immediate Actions Taken</label>
+                        <div class="col-md-4 col-sm-10">
+                          <textarea class="form-control" id="ImmediateActionsTaken{{forloop.counter}}" name="ImmediateActionsTaken">{{incident.actions}}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-3 col-sm-6">Sub Incident Types</div>
+                        <div class="col-md-4 col-sm-5">
+                          <div class="form-check">
+                            <input class="form-check-input chkvalues" id="chk1{{forloop.counter}}" type="checkbox" onclick="fun1(this)" name="SubIncidentTypes[]" value="EnvironmentalIncident" {% if incident.type_env %}checked{% endif %}>
+                            <label class="form-check-label" for="SubIncidentTypes">
+                               Environmental Incident
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input chkvalues" id="chk2{{forloop.counter}}" type="checkbox" onclick="fun1(this)" name="SubIncidentTypes[]" value="Injury/illness" {% if incident.type_injury %}checked{% endif %}>
+                            <label class="form-check-label" for="SubIncidentTypes">
+                              Injury/illness
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input chkvalues" id="chk3{{forloop.counter}}" type="checkbox" onclick="fun1(this)" name="SubIncidentTypes[]" value="PropertyDamage" {% if incident.type_property %}checked{% endif %}>
+                            <label class="form-check-label" for="SubIncidentTypes">
+                              Property Damage
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input chkvalues" type="checkbox"  id="chk4{{forloop.counter}}" onclick="fun1(this)" name="SubIncidentTypes[]" value="Vehicle"  id="SubIncidentTypes" {% if incident.type_vehicle %}checked{% endif %}>
+                            <label class="form-check-label" for="SubIncidentTypes">
+                              Vehicle
+                            </label>
+                          </div>
+                          <!-- <div style="display:none"><input type="text" id="txtvalues" name="SubIncidentTypes"></div> -->
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="ReportedBy" class="col-md-2 col-form-label">Reported By</label>
+                        <!-- <div class="col-md-4">{{user.username}}</div> -->
+                        <input type="text" class="form-control col-md-4" id="ReportedBy{{forloop.counter}}" style="border:0px;background-color:#f9fbfd !important;color:#7c8798 !important" name="ReportedBy" value={{user.username}} placeholder="" readonly>
+                    </div>
+                    {% endfor %}
+                    <div class="form-group col-md-6 text-center mb-5 mt-2">
+                        <button class="btn btn-primary col-md-3 mt-3" type="submit">Submit</button>
+                    </div>
+                  </form>
+                </div>
+                
+               
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js%}
+var counter=document.getElementsByClassName('counter');
+var loc=document.getElementsByClassName('loc');
+var severity=document.getElementsByClassName('severity');
+var incd_date=document.getElementsByClassName('incd_date');
+var ch=document.getElementsByClassName('ch');
+var od=document.getElementsByClassName('od');
+var ws=document.getElementsByClassName('ws');
+var md=document.getElementsByClassName('md');
+var mild=document.getElementsByClassName('Mild');
+var moderate=document.getElementsByClassName('Moderate');
+var severe=document.getElementsByClassName('Severe');
+var fatal=document.getElementsByClassName('Fatal');
+let total=0;
+for (i = 0; i < counter.length; i++) {
+    console.log(counter[i].value);
+    console.log(loc[i].value)
+    if(loc[i].value=='Corporate'){
+        ch[i].selected='selected';
+    }
+    if(loc[i].value=='Operations'){
+        od[i].selected='selected';
+    }
+    if(loc[i].value=='Work'){
+        ws[i].selected='selected';
+    }
+    if(loc[i].value=='Marketing'){
+        md[i].selected='selected';
+    }
+    if(severity[i].value=='Mild'){
+        mild[i].selected='selected';
+    }
+    if(severity[i].value=='Moderate'){
+        moderate[i].selected='selected';
+    }
+    if(severity[i].value=='Severe'){
+        severe[i].selected='selected';
+    }
+    if(severity[i].value=='Fatal'){
+        fatal[i].selected='selected';
+    }
+    total=counter[i].value;
+  }
+console.log(total)
+for(var i=0;i<=total;i++){
+    
+    console.log(incd_date);
+    console.log(severity);
+    console.log(loc);
+}
+{%endblock js %}
