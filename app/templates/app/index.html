@@ -1,0 +1,68 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper" style="box-shadow:none !important">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-7 align-self-center">
+                        {% if messages %}
+                            {% for message in messages %}
+                         <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert"> -->
+                                <h3 class="msg" style="color:green !important">{{message}}</h3>
+                        {% endfor %}
+                        {% endif %}
+                        <h2 class="page-title" style="color:black !important">Hello {{user.username}}!</h2>
+                        <div class="d-flex align-items-center">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb m-0 p-0">
+                                    <li class="breadcrumb-item"><a href="{% url 'home'%}">Dashboard</a>
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 ml-5">
+                <div class="">
+                    <p>One can log in and report an incident and view saved incidents.</p>
+                    <p>Admin can view the form.</p>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- footer -->
+            <!-- ============================================================== -->
+            
+            <!-- ============================================================== -->
+            <!-- End footer -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+
+    {% endblock content%}
+
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    {% block js %}{% endblock js %}
+</body>
+
+</html>
